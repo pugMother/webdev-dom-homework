@@ -76,15 +76,20 @@
     writeButton.disabled = 'disabled';
 
     userName.addEventListener('input', () => {
-      userComment.addEventListener('input', () => {
+    if (userName.value.trim() === '' || userComment.value.trim() === '') {
+        writeButton.disabled = true;
+    } else {
+        writeButton.disabled = false;
+    }
+    });
 
-        if (userName.value === '' && userComment.value === '') {
-          writeButton.disabled = 'disabled';
-        } else {
-          writeButton.disabled = false;
-        }
-      })
-    })
+    userComment.addEventListener('input', () => {
+    if (userName.value.trim() === '' || userComment.value.trim() === '') {
+        writeButton.disabled = true;
+    } else {
+        writeButton.disabled = false;
+    }
+    });
 
     writeButton.addEventListener('click', () => {
       let oldCommentsList = commentsList.innerHTML;
@@ -125,6 +130,7 @@
       document.getElementById('writeButton').disabled = 'disabled';
       }
     })
+    
     // Код писать здесь
     console.log("It works!");
   </script>
