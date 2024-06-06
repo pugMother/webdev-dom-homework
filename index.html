@@ -9,40 +9,6 @@
   <body>
     <div class="container">
       <ul id="list" class="comments">
-        <!--<li class="comment">
-          <div class="comment-header">
-            <div>Глеб Фокин</div>
-            <div>12.02.22 12:18</div>
-          </div>
-          <div class="comment-body">
-            <div class="comment-text">
-              Это будет первый комментарий на этой странице
-            </div>
-          </div>
-          <div class="comment-footer">
-            <div class="likes">
-              <span class="likes-counter">3</span>
-              <button class="like-button"></button>
-            </div>
-          </div>
-        </li>
-        <li class="comment">
-          <div class="comment-header">
-            <div>Варвара Н.</div>
-            <div>13.02.22 19:22</div>
-          </div>
-          <div class="comment-body">
-            <div class="comment-text">
-              Мне нравится как оформлена эта страница! ❤
-            </div>
-          </div>
-          <div class="comment-footer">
-            <div class="likes">
-              <span class="likes-counter">75</span>
-              <button class="like-button -active-like"></button>
-            </div>
-          </div>
-        </li>-->
       </ul>
       <div class="add-form">
         <input
@@ -97,7 +63,8 @@
     const renderComments = () => {
       const commentsHTML = comments.map((userComment, index) => {
       let textHTML;
-        
+      const sanitizedComment = sanitize(userComment.comment);
+      const sanitizedName = sanitize(userComment.name);
       textHTML = `<li class="comment">
         <div class="comment-header">
           <div>${userComment.name}</div>
@@ -165,9 +132,8 @@
     })
 
     function sanitize(text) {
-      return text.replaceAll('<', '&lt;').replaceAll('>', '&gt;')
-      .replaceAll('QUOTE_BEGIN', '<div class="quote">').replaceAll('QUOTE_END', '</div>');
-    }
+            return text.replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+        }
 
       writeButton.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -194,21 +160,22 @@
         })
 
         renderComments();
-
-      userName.value = '';
-      userComment.value = '';
-      document.getElementById('writeButton').disabled = 'disabled';
+        userName.value = '';
+        userComment.value = '';
+        writeButton.disabled = true;
       }
     })
     
     function answerComment() {
-      const commentHTML = document.querySelectorAll('.comment');
-      commentHTML.forEach((el, i) => {
-        el.addEventListener('click', () => {
-          userComment.value = `QUOTE_BEGIN>${comments[i].name}\n ${comments[i].comment}QUOTE_END`;
-        })
-      })
-    }
+            const commentElements = document.querySelectorAll('.comment');
+            commentElements.forEach((el, i) => {
+                el.addEventListener('click', () => {
+                    const quote = `>${comments[i].name}:\n${comments[i].comment}\n`;
+                    userComment.value = quote;
+                    userName.focus();
+                })
+            })
+        }
     document.addEventListener('keyup', (el) => {
       if (el.keyCode === 13) {
         writeButton.click();
