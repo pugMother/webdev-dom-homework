@@ -68,7 +68,7 @@
       textHTML = `<li class="comment">
         <div class="comment-header">
           <div>${userComment.name}</div>
-          <div>${userComment.time}</div>
+          <div>${userComment.date}</div>
         </div>
         <div class="comment-body">
           <div class="comment-text">
@@ -154,7 +154,7 @@
         comments.push({
           name: sanitize(userName.value),
           comment: sanitize(userComment.value),
-          time: currentDate,
+          date: currentDate,
           numLikes: 0,
           isLiked: false
         })
